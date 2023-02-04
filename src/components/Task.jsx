@@ -4,17 +4,20 @@ const Task = ({ task, ...props}) => {
 
     const ActionBtn = () => (
         <div className='action-btn'>
-        {!task.done ?
-            <p onClick={props.doneTask}>✔️</p>
-            : <p onClick={props.deleteTask}>❌</p>}
-    </div>)
+            <button onClick={props.doneTask}>{!task.done ?" ✔️" : "❌"}</button>
+            <button onClick={props.deleteTask}>DELETE</button>
+        {/*{!task.done ?*/}
+        {/*    <button onClick={props.doneTask}>✔️</button>*/}
+        {/*    : <button onClick={props.deleteTask}>❌</button>}*/}
+        </div>)
+
 
     const className = 'task' + (task.done ? 'task-done' : '')
 
     return (
         <div className={className}>
             <p>{task.title}</p>
-            <ActionBtn></ActionBtn>
+            <ActionBtn/>
         </div>
     )
 }

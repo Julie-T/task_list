@@ -19,39 +19,55 @@ class App extends Component {
     }
 
     addTask = (task) => {
-      this.setState(state => {
-        let { tasks } = state;
-        tasks.push({
-          id: tasks.length !== 0 ? task.length : 0,
+        const newTask = {
+            id: this.state.tasks.length !== 0 ? task.length : 0,
             title: task,
             done: false,
-        });
-        return tasks;
-      })
+        }
+        const newTasks = this.state.tasks.push(newTask)
+        this.setState( {task: newTasks})
+
+        // this.setState(state => {
+        //     let {tasks} = state;
+        //     tasks.push({
+        //         id: tasks.length !== 0 ? task.length : 0,
+        //         title: task,
+        //         done: false,
+        //     });
+        //     return tasks;
+        // })
     }
 
     doneTask = (id) => {
-        const index = this.state.tasks.map(task => task.id).indexOf(id);
-        this.setState(state => {
-            let { tasks } = state;
-            tasks[index].done = true;
-            return tasks;
-        })
+        // const index = this.state.tasks.map(task => task.id).indexOf(id);
+        // this.setState(state => {
+        //     let { tasks } = state;
+        //     // if(tasks[index].done === true) {
+        //     //     tasks[index].done = false;
+        //     // } else {
+        //     //     tasks[index].done = true;}
+        //     tasks[index].done = !tasks[index].done;
+        //     return tasks;
+        // })
+        const newTasks = this.state.tasks.map(task => task.id === id ? task.done = !task.done : task)
+        this.setState({task: newTasks})
     }
 
     deleteTask = (id) => {
-        const index = this.state.tasks.map(task => task.id).indexOf(id);
-        this.setState(state => {
-            let { tasks } = state;
-            delete tasks[index];
-            return tasks;
-        })
+        const newTasks = this.state.tasks.filter(task => task.id !== id)
+        this.setState({tasks: newTasks})
+        // const index = this.state.tasks.map(task => task.id).indexOf(id);
+        // this.setState(state => {
+        //     let {tasks} = state;
+        //     delete tasks[index];
+        //     return tasks;
+        // })
     }
 
     render() {
-        const {tasks} = this.state;
-        const activeTasks = tasks.filter(task => !task.done);
-        const doneTasks = tasks.filter(task => task.done);
+        // const {tasks} = this.state;
+        const activeTasks = this.state.tasks.filter(task => !task.done);
+        const doneTasks = this.state.tasks.filter(task => task.done);
 
         return (
             <div className='App'>
@@ -63,7 +79,7 @@ class App extends Component {
                         task={task}
                         key={nanoid()}/>
                 ))}
-                <TaskInput addTask={this.addTask}></TaskInput>
+                <TaskInput addTask={this.addTask}/>
             </div>
         );
     }

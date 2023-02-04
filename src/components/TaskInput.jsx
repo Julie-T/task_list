@@ -10,9 +10,9 @@ class TaskInput extends Component {
     }
 
     addTask = () => {
-        const { input } = this.state;
-        if(input) {
-            this.props.addTask(input);
+        // const { input } = this.state;
+        if(this.state.input) {
+            this.props.addTask(this.state.input);
             this.setState({input: ''});
         }
     }
@@ -26,11 +26,11 @@ class TaskInput extends Component {
     }
 
     render() {
-        const {input} = this.state;
+        // const {input} = this.state;
 
         return(
             <div className='task-input'>
-                <input onKeyPress={this.handleEnter} onChange={this.inputChange} value={input}></input>
+                <input onKeyPress={this.handleEnter} onChange={this.inputChange} value={this.state.input}/>
                 <button onClick={this.addTask}>ADD</button>
             </div>
         )
