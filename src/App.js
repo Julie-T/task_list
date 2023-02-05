@@ -3,7 +3,8 @@ import Task from "./components/Task";
 import TaskInput from "./components/TaskInput";
 import {nanoid} from 'nanoid'
 import {observer} from 'mobx-react'
-import store from "./store/index";
+import Store from "./store/index";
+const store = new Store();
 
 class App extends Component {
 

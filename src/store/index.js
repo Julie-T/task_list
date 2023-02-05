@@ -1,12 +1,24 @@
-import decorate, {  observable, computed, action } from 'mobx';
+import {  observable, computed, action, makeObservable } from 'mobx';
+import decorate from 'mobx-react'
 
-class Store {
+export default class Store {
     tasks = [
         {id: 0, title: 'walk the dog', done: false,},
         {id: 1, title: 'car wash', done: true,},
         {id: 2, title: 'housework', done: true,},
         {id: 3, title: 'pink shorts', done: false,},
     ];
+
+    constructor() {
+        makeObservable(this, {
+            tasks: observable,
+            activeTasks: computed,
+            sortedTasks: computed,
+            addTask: action,
+            deleteTask: action,
+            doneTask: action,
+        })
+    }
 
     setTask(payload) {
         this.tasks = payload;
@@ -24,19 +36,23 @@ class Store {
     addTask(task) {
         let tasks = this.tasks
         const newTask = {
-            // id: this.tasks.length !== 0 ? task.length : 0,
-            id: this.tasks.length || 0,
+            id: this.tasks.length !== 0 ? task.length : 0,
+            // id: this.tasks.length || 0,
             title: task,
             done: false,
         }
         tasks.push(newTask)
-        // this.setState( {task: newTasks})
         this.setTask(tasks);
     }
 
     doneTask(id) {
-        const newTasks = this.tasks.map(task => task.id === id ? task.done = !task.done : task)
-        // this.setState({task: newTasks})
+        // const newTasks = this.tasks.map(task => task.id === id ? (task.done = !task.done) : task)
+        const newTasks = this.tasks.map(task => {
+            if (task.id === id) {
+                task.done = !task.done
+                return task
+            } else return task
+        })
         this.setTask(newTasks);
     }
     deleteTask(id) {
@@ -45,21 +61,4 @@ class Store {
     }
 }
 
-// {activeTasks.length}
 
-// const StoreView = observer(({store})=> (
-//     <span></span>
-// ))
-
-Store = decorate(Store, {
-    tasks: observable,
-    activeTasks: computed,
-    sortedTasks: computed,
-    addTask: action,
-    deleteTask: action,
-    doneTask: action,
-})
-
-const myStore = new Store();
-
-export default myStore
