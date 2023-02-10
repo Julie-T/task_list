@@ -14,7 +14,7 @@ export default class Store {
             tasks: observable,
             activeTasks: computed,
             sortedTasks: computed,
-            addTask: action,
+            addTask: action.bound,
             deleteTask: action,
             doneTask: action,
         })
@@ -36,8 +36,8 @@ export default class Store {
     addTask(task) {
         let tasks = this.tasks
         const newTask = {
-            id: this.tasks.length !== 0 ? task.length : 0,
-            // id: this.tasks.length || 0,
+            // id: this.tasks.length !== 0 ? task.length : 0,
+            id: this.tasks.length || 0,
             title: task,
             done: false,
         }
